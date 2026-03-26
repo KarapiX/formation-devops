@@ -68,7 +68,10 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/ssh_key
           chmod 600 /tmp/ssh_key
+      - name: Set lowercase owner
+        run: echo "OWNER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
+        
       - name: Deploy to Scaleway instance (production)
         env:
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
